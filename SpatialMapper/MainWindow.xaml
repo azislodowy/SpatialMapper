@@ -1,0 +1,191 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="SpatialMapper.MainWindow"
+        
+        Title="Spatial Mapper" Height="600" Width="800" MinHeight="600" MinWidth="800" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing">
+      
+    <Grid Background="Gray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="304*"/>
+            <RowDefinition Height="162*"/>
+            <RowDefinition Height="77*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="237*"/>
+            <ColumnDefinition Width="282*"/>
+            <ColumnDefinition Width="259*"/>
+
+        </Grid.ColumnDefinitions>
+        <Menu x:Name="menu" Grid.Row="0" Grid.Column="0" Background="Silver" HorizontalContentAlignment="Left" Grid.ColumnSpan="3">
+            <MenuItem Header="Edit" x:Name="menuFile">
+                <MenuItem Header="New Layer" x:Name="menuNewLayer" Click="menu_Click"/>
+                <MenuItem Header="New Media" x:Name="menuNewMedia" Click="menu_Click"/>
+                <MenuItem Name="menu_ApplyTexture" Header="Apply Texture to Layer" Click="menu_Click"/>
+                <MenuItem Name="menuExit" Header="Close Application" Click="menu_Click"/>
+            </MenuItem>
+            <MenuItem Header="View" x:Name="menuEdit" >
+                
+                <MenuItem Name="Edit_MenuItem_NewWindow" Header="Render to new Window" Click="MenuEditItem_Click"/>
+                <MenuItem Name="Edit_MenuItem_HideBackGround" Header="Hide Layer Background" Click="MenuEditItem_Click"/>
+                <MenuItem Name="Edit_MenuItem_ShowBackGround" Header="Show Layer Background" Click="MenuEditItem_Click"/>
+                <MenuItem Name="Edit_MenuItem_HidePreview" Header="Hide Preview" Click="MenuEditItem_Click"/>
+                <MenuItem Name="Edit_MenuItem_ShowPreview" Header="Show Preview" Click="MenuEditItem_Click"/>
+            </MenuItem>
+
+        </Menu>
+        <GroupBox Header="Layers" Grid.Row="1" Background="Gray" Margin="0,0,8,0">
+            <ListBox x:Name="LayersListBox" Background="Gray" BorderThickness="0" SelectionChanged="LayersListBox_SelectionChanged" >
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="LayersList_AddNewLayer" Header="New Layer" Click="LayersListContext_Click"></MenuItem>
+                        <MenuItem x:Name="LayersList_RemoveLayer" Header="Remove Layer" Click="LayersListContext_Click"></MenuItem>
+                        <MenuItem x:Name="LayersList_RenameLayer" Header="Rename Layer" Click="LayersListContext_Click"></MenuItem>                                
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+
+        </GroupBox>
+        <GroupBox Header="Media" Grid.Row="2" Margin="0,0,8,0">
+            <ListBox x:Name="MediaListBox" Background="Gray" BorderThickness="0" SelectionChanged="MediaListBox_SelectionChanged">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add New Media" x:Name="MediaList_AddNewMedia" Click="ContextMenuMedia_Click"></MenuItem>
+                        <MenuItem Header="Remove Media" x:Name="MediaList_RemoveMedia" Click="ContextMenuMedia_Click"></MenuItem>
+                        <MenuItem Header="Rename" x:Name="MediaList_RenameMedia" Click="ContextMenuMedia_Click"></MenuItem>
+                    </ContextMenu>
+                    
+                </ListBox.ContextMenu>
+            </ListBox>
+        </GroupBox>
+        <GroupBox x:Name="SelectedLayersMediaGroupBox" Header="Layers Media" Grid.Column="1" Grid.Row="2">
+            <ListBox x:Name="SelectedLayersMediaListBox" Background="Gray"  SelectionChanged="SelectedLayersMediaListBox_SelectionChanged">   
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="LayersMediaList_ApplyTexture" Header="Apply Texture" Click="LayersMediaListContext_Click"></MenuItem>
+                    <MenuItem x:Name="LayersMediaList_RemoveTexture" Header="Remove Texture" Click="LayersMediaListContext_Click"></MenuItem>
+                    <MenuItem x:Name="LayerMediaList_MoveTextureUp" Header="Move Texture Up" Click="LayersMediaListContext_Click"></MenuItem>
+                    <MenuItem x:Name="LayerMediaList_MoveTextureDown" Header="Move Texture Down" Click="LayersMediaListContext_Click"></MenuItem>
+                    </ContextMenu>
+                
+            </ListBox.ContextMenu>
+
+            </ListBox>
+            
+            
+        </GroupBox>
+        <TabControl x:Name="OptionTabs" Grid.Row="1" Grid.Column="1" Background="Gray">
+            <TabItem Header="Transform"  Background="Gray">
+                <Grid x:Name="TransformGrid">
+                   
+                    <Grid.RowDefinitions>
+                        
+                        <RowDefinition Height="66*" />
+                        <RowDefinition Height="61*" />
+                        <RowDefinition Height="67*" />
+                        <RowDefinition Height="78*" />
+                      
+                    </Grid.RowDefinitions>
+                  
+                    <GroupBox Header="Top Left" Grid.Row="1" FontSize="10"  BorderThickness="0" Height="66" VerticalAlignment="Top">
+                    <StackPanel Height="55">
+                            <Slider VerticalAlignment="Center" x:Name="sliderTopLeftX" Minimum="-1.6" Maximum="2.5" SmallChange="0.01" ValueChanged="transformsliderValueChanged"/>
+
+                            <Slider VerticalAlignment="Center" x:Name="sliderTopLeftY" Minimum="-2.5" Maximum="2.5" SmallChange="0.01" ValueChanged="transformsliderValueChanged"  />
+                    </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="3" Header="Top Right" FontSize="10" BorderThickness="0">
+                    <StackPanel>
+                    <Slider VerticalAlignment="Center" x:Name="sliderTopRightX" Minimum="-1.6" Maximum="3.0" SmallChange="0.01" ValueChanged="transformsliderValueChanged"/>
+                    <Slider VerticalAlignment="Center" x:Name="sliderTopRightY" Minimum="-2.5" Maximum="2.5" SmallChange="0.01" ValueChanged="transformsliderValueChanged"/>
+                    </StackPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Row="0" Header="Bottom Left" FontSize="10" BorderThickness="0" Height="67" VerticalAlignment="Top">
+                    <StackPanel Height="48">
+                           
+                    <Slider VerticalAlignment="Center" x:Name="sliderBottomLeftX" Minimum="-1.6" Maximum="2.5" SmallChange="0.01" ValueChanged="transformsliderValueChanged"  />
+                    <Slider VerticalAlignment="Center" x:Name="sliderBottomLeftY" Minimum="-2.5" Maximum="2.5" SmallChange="0.01" ValueChanged="transformsliderValueChanged"/>
+                    </StackPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Row="2" Header="Bottom Right" FontSize="10" BorderThickness="0">
+                        <StackPanel>
+                            <Slider VerticalAlignment="Center" x:Name="sliderBottomRightX" Minimum="-1.6" Maximum="3.0" SmallChange="0.01" ValueChanged="transformsliderValueChanged"  />
+                    <Slider VerticalAlignment="Center" x:Name="sliderBottomRightY" Minimum="-2.5" Maximum="2.5" SmallChange="0.01" ValueChanged="transformsliderValueChanged"  />
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Media Controller" Background="Gray">
+                <GroupBox Header="Video" FontSize="10">
+                    <StackPanel>
+                        <Grid Height="242">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32" />
+                                <ColumnDefinition Width="158" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="27" />
+                                <RowDefinition Height="106" />
+                                <RowDefinition Height="92*" />
+                            </Grid.RowDefinitions>
+                            <Rectangle x:Name="MediaController_Rectangle_VideoPreview"  Grid.Column="1" Grid.Row="1" Height="100" Width="150" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Slider x:Name="MediaController_Slider_Progress" Minimum="0" Value="0" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="158" PreviewMouseLeftButtonDown="MediaController_Slider_Progress_MouseLeftButtonDown" PreviewMouseLeftButtonUp="MediaController_Slider_Progress_MouseLeftButtonUp"></Slider>
+                            <GroupBox Header="Speed Ratio" FontSize="8" BorderThickness="0.5" Grid.Column="2" Grid.Row="2" Height="35" VerticalAlignment="Top">
+                                <Slider x:Name="MediaSpeedSlider" Maximum="2" Minimum="0.1" SmallChange="0.1" Value="1" ValueChanged="MediaController_Sliders_ValueChanged" />
+                            </GroupBox>
+                            <GroupBox Header="Opacity" FontSize="8" BorderThickness="0.5" Grid.Column="2" Grid.Row="2" Margin="2,38,-2,0" Height="42" VerticalAlignment="Top">
+                                <Slider x:Name="MediaController_Slider_Opacity" Minimum="0" Maximum="1" SmallChange="0.01" Value="1" />
+                            </GroupBox>
+
+                                <GroupBox Header="Playback" FontSize="8" Grid.Column="1" Grid.Row="2" BorderThickness="0" Height="38" Margin="0,3,0,0" VerticalAlignment="Top">
+                                    <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50*" />
+                                            <ColumnDefinition Width="50*" />
+                                            <ColumnDefinition Width="50*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button x:Name="MediaController_PlayButton" Height="18" Width="35" HorizontalAlignment="Center" VerticalAlignment="Top" Click="mediaController_PlaybackButtons" Grid.Column="0">Play</Button>
+                                        <Button x:Name="MediaController_PauseButton" Content="Pause" Height="18" HorizontalAlignment="Center"  Click="mediaController_PlaybackButtons" VerticalAlignment="Top" Width="35" Grid.Column="1" />
+                                        <Button x:Name="MediaController_StopButton" Content="Stop" Height="18" HorizontalAlignment="Center"  Click="mediaController_PlaybackButtons" VerticalAlignment="Top" Width="35" Grid.Column="2" />
+                                    </Grid>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Options" FontSize="8" BorderThickness="0.5" Grid.Column="2" Grid.Row="1">
+                                <StackPanel>
+                                    <CheckBox x:Name="MediaMuteCkBox">Mute</CheckBox>
+                                    <CheckBox x:Name="MediaLoopCkBox" IsChecked="True">Loop</CheckBox>
+                                    <CheckBox x:Name="MediaPreviewCkBox" IsChecked="True">Preview</CheckBox>
+                                </StackPanel>
+                            </GroupBox>
+                            <Button x:Name="ResetToDefault" Click="mediaController_PlaybackButtons" Grid.Column="2" Margin="6,82,6,6" Grid.Row="2">reset</Button>
+                        </Grid>
+
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+
+        </TabControl>
+        <StackPanel x:Name="viewportStackPanel"   Grid.Column="2" Grid.Row="1" >
+            <Viewport3D x:Name="viewport" Margin="6,6,6,80" Height="210" Width="246">
+            <Viewport3D.Camera>
+                <OrthographicCamera x:Name="camera" FarPlaneDistance="50"
+        NearPlaneDistance="0" LookDirection="0,0,-1" UpDirection="0,1,0"
+            Position="0.5,0.5,1" Width="4" />
+            </Viewport3D.Camera>
+            <ModelVisual3D x:Name="model">
+                <ModelVisual3D.Content>
+                    <Model3DGroup x:Name="models3dgroup">
+                        <AmbientLight Color="DarkGray" />
+                        <DirectionalLight Color="White" Direction="-5,-5,-7" />
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+        </Viewport3D>
+        </StackPanel>
+    </Grid>
+</Window>
