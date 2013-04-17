@@ -19,6 +19,5 @@ Later you can adjust them with the sliders in Transform Tab
 11. Control the videos in Media Controller Tab
 12. If you will play with opacity you might see the checker pattern appear to fix this go to View->Hide Layer Background
 13. If you meet lack of performance you may try to View->Hide Preview
-
 14. HAVE FUN!
  
