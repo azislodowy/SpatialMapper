@@ -21,3 +21,4 @@ Later you can adjust them with the sliders in Transform Tab
 13. If you meet lack of performance you may try to View->Hide Preview
 
 14. HAVE FUN!
+ 
